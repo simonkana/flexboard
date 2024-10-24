@@ -34,12 +34,32 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # Use SMTP server for mail sending
+  config.action_mailer.delivery_method = :smtp
+
+  # Setup SMTP credentials
+  config.action_mailer.smtp_settings = {
+    address: ENV["SMTP_SERVER"],
+    port: ENV["SMTP_PORT"],
+    domain: ENV["SMTP_DOMAIN"],
+    user_name: ENV["SMTP_USERNAME"],
+    password: ENV["SMTP_PASSWORD"],
+    authentication: :login,
+    tls: true
+  }
+
+  # Enable deliveries
+  config.action_mailer.perform_deliveries = true
+
+  # Enable delivery errors
+  config.action_mailer.raise_delivery_errors = true
 
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.
   config.action_mailer.perform_caching = false
+
+  # Set default mail from
+  config.action_mailer.default_options = { from: ENV["SMTP_USERNAME"] }
 
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 

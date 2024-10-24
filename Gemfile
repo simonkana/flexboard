@@ -57,8 +57,12 @@ group :test do
 end
 
 gem "sorbet", group: :development
+
 gem "sorbet-runtime"
+
 gem "tapioca", require: false, group: [ :development, :test ]
+
+gem "dotenv-rails", groups: [ :development, :test ]
 
 gem "tailwindcss-rails", "~> 3.0"
 
